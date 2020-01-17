@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.dev.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <form action="/like" method="post" onsubmit="like_notification()">
+        <img src=<%=user_info.profile_pic%> width="400px" height="370px" style="border-radius: 50%;"></p>
+        <p>Username: <%=user_info.username%></p>
+        <p>Age: <%=user_info.age%></p>
+        <p>Bio: <%=user_info.bio%></p>
+        <p>Interests: <%=user_info.user_interests%></p>
+        <p>Fame: <%=user_info.fame_rating%></p>
+        <p>I Prefer: <%=user_info.prefence%></p>
+        <p>Gender: <%=user_info.gender%></p>
+        <%
+            if (user_info.status == "online")
+            {
+        %>
+                <span>Status: </span><span style="height: 10px; width: 10px; background-color: greenyellow; border-radius: 50%; display: inline-block;"></span style="  height: 10px; width: 10px; background-color: #bbb; border-radius: 50%; display: inline-block;">
+                <br />
+                <br />
+        <%
+            }
+            else
+            {
+        %>
+                <span>Status: </span><span style="height: 10px; width: 10px; background-color: red; border-radius: 50%; display: inline-block;"></span style="  height: 10px; width: 10px; background-color: #bbb; border-radius: 50%; display: inline-block;"><span> (last online: <%=user_info.date_of_last_connection%>)</span>
+                <br />
+                <br />
+        <%
+            }
+        %>
+        <input type="hidden" name="likes" value=<%=user_info.username%>>
+        <%
+            if (my_profile_pic != "Not_staged")
+            {
+                if (liked_or_not == 0)
+                {
+        %>
+                    <input type="submit" name="submit" value="like">
+        <%
+                }
+                else
+                {
+        %>
+                    <p>You already liked this user!</p>
+        <%
+                }
+            }
+        %>
+    </form>
+    <form action="/chat" method="post">
+        <% if (chat == "Enable") { %>
+            <input type="submit" name="submit" value="chat">
+            <input type="hidden" name="user_liked" value=<%=user_info.username%>>
+        <% } %>
+    </form>
+    <form action="report_user" method="post">
+        <input type="submit" name="submit" value="Report user as fake">
+        <input type="hidden" name="username" value=<%=user_info.username%>>
+    </form>
+    <script>
+        function like_notification()
+        {
+            var socket = io();
+            var my_username = "<%=my_username%>";
+            socket.emit('like_notification', {my_username: my_username});
+        }
+    </script>
+</body>
+</html>

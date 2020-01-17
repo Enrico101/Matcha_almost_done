@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <header>Matcha!</header>
+    <nav>
+        <a href="/profile">profile</a>
+        <a href="/home">Home</a>
+        <a href="/search">Search</a>
+        <a href="/chat_screen">Chat</a>
+        <a href="/view_history">view_history</a>
+        <a href="/visit_history">visit_history</a>
+        <a href="/like_history">like history</a>
+        <a href="/settings">Profile Setting</a>
+        <a href="/logout">logout</a>
+    </nav>
+    <form action="search" method="post">
+        <p>Search by:</p>
+        <p>Age</p>
+        <input type="number" name="age_start" min="18"> Starting
+        <input type="number" name="age_end" min="18"> Ending
+        <input type="number" name="location" min="0"> Location
+        <br />
+        <br />
+        <%
+            if (info == "")
+            {
+        %>
+                <p>Interests:</p>
+                <input type="checkbox" name="interest1" value="Reading">Reading
+                <br />
+                <input type="checkbox" name="interest2" value="Singing">Singing
+                <br />
+                <input type="checkbox" name="interest3" value="Movies">Movies
+                <br />
+                <input type="checkbox" name="interest4" value="Nature">Nature
+                <br />
+                <input type="checkbox" name="interest5" value="Running">Running
+                <br />
+                <br />
+        <%
+            }
+        %>
+        <input type="submit" name="submit" value="search">
+    </form>
+    <form action="sort_results" method="post">
+        <p>Sort by:</p>
+        <p>age</p>
+        <input type="radio" name="age_sort" value="asc">asc
+        <input type="radio" name="age_sort" value="desc">desc
+        <br />
+        <p>location</p>
+        <input type="radio" name="location_sort" value="asc">asc
+        <input type="radio" name="location_sort" value="desc">desc
+        <br />
+        <p>fame rating</p>
+        <input type="radio" name="fame_sort" value="asc">asc
+        <input type="radio" name="fame_sort" value="desc">desc
+        <br />
+        <br />
+        <%
+            if (info == "")
+            {
+        %>
+                <p>common tags</p>
+                <input type="radio" name="tags_sort" value="asc">asc
+                <input type="radio" name="tags_sort" value="desc">desc
+                <br />
+                <br />
+        <%
+            }
+        %>
+        <input type="submit" name="submit" value="sort">
+        <input type="submit" name="submit" value="unsort">
+    </form>
+    <form action="filter_results" method="post">
+        <p>Filter by:</p>
+        <p>age</p>
+        <input type="text" name="age_filter">
+        <br />
+        <br />
+        <p>location</p>
+        <input type="number" min="0" name="location_filter">
+        <br />
+        <br />
+        <p>fame</p>
+        <input type="text" name="fame_filter">
+        <br />
+        <br />
+        <%
+            if (info == "")
+            {
+        %>
+                <p>Interests:</p>
+                <input type="checkbox" name="interest1" value="Reading">Reading
+                <br />
+                <input type="checkbox" name="interest2" value="Singing">Singing
+                <br />
+                <input type="checkbox" name="interest3" value="Movies">Movies
+                <br />
+                <input type="checkbox" name="interest4" value="Nature">Nature
+                <br />
+                <input type="checkbox" name="interest5" value="Running">Running
+                <br />
+                <br />
+        <%
+            }
+        %>
+        <input type="submit" name="submit" value="filter">
+        <input type="submit" name="submit" value="unfilter">
+    </form>
+    <br />
+    <p>Results:</p>
+    <div>
+        <%
+        if (results)
+        {
+            var x = 0;
+            while (results[x])
+            {
+                if (results[x] != "Dont")
+                {%>
+                    <form action="/user_profile" method="post" style="border: 1px solid black; width: 150px">
+                        <%
+                            if (results[x].profile_pic != "Not_staged")
+                            {
+                        %>
+                                <img src=<%=results[x].profile_pic%> width="140px" height="135px" style="border-radius: 50%; margin-left: 5px;">
+                                <br />
+                        <%
+                            }
+                            else
+                            {
+                        %>
+                                <img src="../Uploads/stock_profile_pic.png" width="140px" height="135px" style="border-radius: 50%; margin-left: 5px;">
+                                <br />
+                        <%
+                            }
+                        %>
+                        <span><%=results[x].username%></span>
+                        <br />
+                        <span><%=results[x].bio%></span>
+                        <br />
+                        <span><%=results[x].age%></span>
+                        <br />
+                        <span><%=results[x].distance_from_me%></span>
+                        <input type="hidden" name="username" value=<%=results[x].username%>>
+                        <br />
+                        <%
+                            if (info == "") 
+                            {
+                        %>
+                        <input type="submit" name="submit" value="view profile">
+                        <%
+                            }
+                        %>
+                    </form>
+            <%
+                }
+                x++;
+            }
+        }
+        %>
+    </div>
+    <br />
+    <footer>2019</footer>
+</body>
+</html>

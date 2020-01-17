@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <%
+        let x = 0;
+        while (data[x])
+        {
+    %>
+            <img style="border-radius: 50%; width: 150px; height: 130px;" src=<%=data[x].profile_pic%>>       
+            <p><%=data[x].username%></p>
+            <form action="/chat" method="post">
+                <input type="submit" name="submit" value="chat">
+                <input type="hidden" name="user_liked" value=<%=data[x].username%>>
+            </form>
+            <form action="/unlike" method="post">
+                <input type="submit" name="submit" value="unlike">
+                <input type="hidden" name="unlike_this_user" value=<%=data[x].username%>>
+            </form>
+            <form action="/block" method="post">
+                <input type="submit" name="submit" value="block">
+                <input type="hidden" name="block_this_user" value=<%=data[x].username%>>
+            </form>
+    <%
+            x++;
+        }
+    %>
+</body>
+</html>

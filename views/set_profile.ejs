@@ -1,0 +1,62 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <p>Welcome <%= username %>, you are successfully loggedon</p>
+        <form action="/complete_profile" method="post" enctype="multipart/form-data" onsubmit="post_bio()">
+            <% if (info == "incomplete") {%>
+                <p style="color: red;">Please complete information below</p>
+            <% } %>
+            <p>Gender:</p>
+            <input type="radio" name="gender" value="male"> Male
+            <br />
+            <input type="radio" name="gender" value="female"> Female
+            <br />
+            <p>Age:</p>
+            <input type="number" name="age" min="1" max="100">
+            <br />
+            <p>Prefence:</p>
+            <input type="radio" name="prefence" value="men"> Men
+            <br />
+            <input type="radio" name="prefence" value="women"> Women
+            <br />
+            <input type="radio" name="prefence" value="other"> Other
+            <br /> 
+            <p>Bio:</p>
+            <input type="text" name="bio">
+            <br />
+            <p>Interests:</p>
+            <input type="checkbox" name="interest1" value="Reading">Reading
+            <br />
+            <input type="checkbox" name="interest2" value="Singing">Singing
+            <br />
+            <input type="checkbox" name="interest3" value="Movies">Movies
+            <br />
+            <input type="checkbox" name="interest4" value="Nature">Nature
+            <br />
+            <input type="checkbox" name="interest5" value="Running">Running
+            <br />
+            <br />
+            <p>Choose distance: </p>
+            <input type="number" name="distance" min="1" max="100"> km
+                <p>Choose an image(min: 1 and max: 5):</p>
+                <input type="file" name="photos" multiple>
+                <input type="hidden" id="lat" name="lat">
+                <input type="hidden" id="long" name="long">
+                <br />
+                <br />
+            <input type="submit" name="submit" value="next">
+            <input type="submit" name="submit" value="skip">
+        </form>
+        <script>
+            var skip = document.getElementById("skip");
+            //collecting users location on permission.
+            navigator.geolocation.getCurrentPosition((succ) => {
+                var lat = document.getElementById("lat");
+                var long = document.getElementById("long");
+                lat.value = succ.coords.latitude;
+                long.value = succ.coords.latitude;
+            });
+        </script>
+    </body>
+</html>

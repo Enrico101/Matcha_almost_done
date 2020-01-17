@@ -1,0 +1,42 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <header>Matcha!</header>
+        <nav>
+            <a href="/profile">profile</a>
+            <a href="/home">Home</a>
+            <a href="/search">Search</a>
+            <a href="/chat_screen">Chat</a>
+            <a href="/view_history">view_history</a>
+            <a href="/visit_history">visit_history</a>
+            <a href="/like_history">like history</a>
+            <a href="/settings">Profile Setting</a>
+            <a href="/logout">logout</a>
+        </nav>
+        <%
+            if (info == "user is ghosted")
+            {
+        %>
+                <p>Welcome: <%=username%></p>
+                <p>You are currently in ghost mode.</p>
+        <%
+            }
+            else
+            {
+        %>
+                <p>Welcome: <%=username%></p>
+                <p>Notification area:</p>
+                <% if (recent_like_back != "Empty"){ %>
+                    <form action="/user_profile" method="post">
+                        <span>You macthed with <%=recent_like_back.likes%>!</span>
+                        <input type="hidden" name="username" value=<%=recent_like_back.likes%>>
+                        <input type="submit" name="submit" value="Profile">
+                    </form>
+                <% } %>
+        <%
+            }
+        %>
+        <footer>2019</footer>
+    </body>
+</html>

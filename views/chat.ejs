@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.dev.js"></script>
+</head>
+<body>
+    <div style="border: 1px solid black; width: 200px;">
+    <% 
+        let x = 0;
+        while (room_messages[x])
+        {
+    %>
+            <p><%=room_messages[x].username%>: <%=room_messages[x].message%></p>
+    <%
+            x++;
+        }
+    %>
+    <p id="display"></p>
+    </div>
+    <br />
+    <br />
+    <input type="text" id="message"></input>
+    <button id="send" name="send">Send</button>
+    <button id="leave" name="leave">Leave</button>
+    <script>
+        var socket = io();
+        var message = document.getElementById("message");
+        var send = document.getElementById("send");
+        var leave = document.getElementById("leave");
+        var display = document.getElementById("display");
+        var id = "<%=room_id%>";
+
+        socket.emit('room', {room_id: id});
+        send.addEventListener('click', () => {
+            console.log("click!");
+            socket.emit('chat', {message: message.value, room_id: id, username: "<%=username%>"});
+            message.value = "";
+        });
+        leave.addEventListener('click', () => {
+            socket.emit('leave', {room_id: id, socket_id: socket.id});
+            location.replace('/profile');
+        });
+        socket.on('chat', (data) => {
+            display.innerHTML += '<p>' + data.username + ':' + ' ' + data.message + '</p>';
+        })
+    </script>
+</body>
+</html>
