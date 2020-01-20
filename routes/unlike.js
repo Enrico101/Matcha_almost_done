@@ -18,13 +18,15 @@ router.use(bodyParser.urlencoded({
 
 router.post('/unlike', (req, res) => {
     db.query("UPDATE likes SET like_back = ? WHERE username = ? AND likes = ?", [0, req.body.unlike_this_user, req.session.username]);
-    db.query("SELECT room_id FROM likes WHERE username = ?", [req.session.username], (err, succ) => {
+    db.query("UPDATE likes SET room_id = ? WHERE username = ? AND likes = ?", ["not_staged", req.body.unlike_this_user, req.session.username], (err, succ) => {
         if (err)
             res.send("An error has occured!");
+    })
+    db.query("DELETE FROM likes WHERE username = ? AND likes = ?", [req.session.username, req.body.unlike_this_user], (err, succ) => {
+        if (err)
+            res.send(err);
         else
-        {
-            res.redirect("/chat");
-        }
+            res.redirect('/chat_screen');
     })
 })
 module.exports = router;

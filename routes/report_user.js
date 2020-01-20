@@ -30,7 +30,7 @@ router.post("/report_user", (req, res) => {
     {
         db.query("INSERT INTO reported (reported_user, reported_by) VALUES (?, ?)", [req.body.username, req.session.username], (err, succ) => {
             if (err)
-                res.send("An error has occured!");
+                res.send(err);
             else
             {
                 var mailOptions = {

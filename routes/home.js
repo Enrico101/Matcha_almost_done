@@ -149,6 +149,7 @@ router.get('/home', function(req, res) {
                                     }
                                 }
                             }
+                            let minimum_fame_rating = maximum_fame_rating / 2; 
                             while (users[x])
                             {
                                 //We first check if the user is blocked and then move on.
@@ -156,7 +157,7 @@ router.get('/home', function(req, res) {
                                 let blocked_user_found = 0;
                                 while (succ[z])
                                 {
-                                    if ((users[x].username == succ[z].likes) && (succ[z].status == "blocker"))
+                                    if ((users[x].username == succ[z].likes) && (succ[z].status == "blocked"))
                                     {
                                         blocked_user_found++;
                                     }
@@ -166,77 +167,76 @@ router.get('/home', function(req, res) {
                                 {
                                     //Do nothing
                                 }
-                                else if (users[x].fame_rating != maximum_fame_rating)
+                                else if ((users[x].fame_rating <= maximum_fame_rating) && (users[x].fame_rating >= minimum_fame_rating))
                                 {
-                                    //Do nothing
-                                    console.log("max: "+maximum_fame_rating);
-                                }
-                                else if (myPrefence == "women")
-                                {
-                                    if (myGender == "male")
+                                    if (myPrefence == "women")
                                     {
-                                        if (users[x].gender == "female" && users[x].prefence == "men")
+                                        if (myGender == "male")
                                         {
-                                            valid_users[y] = new Users(users[x].profile_pic, users[x].gender, users[x].age, users[x].prefence, users[x].bio, users[x].username, users[x].preferred_distance, users[x].longitude, users[x].latitude, users[x].user_interests, users[x].fame_rating, users[x].status);
-                                            y++;
+                                            if (users[x].gender == "female" && users[x].prefence == "men")
+                                            {
+                                                valid_users[y] = new Users(users[x].profile_pic, users[x].gender, users[x].age, users[x].prefence, users[x].bio, users[x].username, users[x].preferred_distance, users[x].longitude, users[x].latitude, users[x].user_interests, users[x].fame_rating, users[x].status);
+                                                y++;
+                                            }
+                                        }
+                                        else if (myGender == "female")
+                                        {
+                                            if (users[x].gender == "female" && users[x].prefence == "women")
+                                            {
+                                                valid_users[y] = new Users(users[x].profile_pic, users[x].gender, users[x].age,users[x].prefence, users[x].bio, users[x].username, users[x].preferred_distance, users[x].longitude, users[x].latitude, users[x].user_interests, users[x].fame_rating, users[x].status);
+                                                y++;
+                                            }
                                         }
                                     }
-                                    else if (myGender == "female")
+                                    else if (myPrefence == "men")
                                     {
-                                        if (users[x].gender == "female" && users[x].prefence == "women")
+                                        if (myGender == "male")
                                         {
-                                            valid_users[y] = new Users(users[x].profile_pic, users[x].gender, users[x].age,users[x].prefence, users[x].bio, users[x].username, users[x].preferred_distance, users[x].longitude, users[x].latitude, users[x].user_interests, users[x].fame_rating, users[x].status);
-                                            y++;
+                                            if (users[x].gender == "male" && users[x].prefence == "men")
+                                            {
+                                                valid_users[y] = new Users(users[x].profile_pic, users[x].gender, users[x].age, users[x].prefence, users[x].bio, users[x].username, users[x].preferred_distance, users[x].longitude, users[x].latitude, users[x].user_interests, users[x].fame_rating, users[x].status);
+                                                y++;
+                                            }
+                                        }
+                                        else if (myGender == "female")
+                                        {
+                                            if (users[x].gender == "male" && users[x].prefence == "women")
+                                            {
+                                                valid_users[y] = new Users(users[x].profile_pic, users[x].gender, users[x].age, users[x].prefence, users[x].bio, users[x].username, users[x].preferred_distance, users[x].longitude, users[x].latitude, users[x].user_interests, users[x].fame_rating, users[x].status);
+                                                y++;
+                                            }
                                         }
                                     }
-                                }
-                                else if (myPrefence == "men")
-                                {
-                                    if (myGender == "male")
+                                    else if (myPrefence == "bi-sexual")
                                     {
-                                        if (users[x].gender == "male" && users[x].prefence == "men")
+                                        if (myGender == "male")
                                         {
-                                            valid_users[y] = new Users(users[x].profile_pic, users[x].gender, users[x].age, users[x].prefence, users[x].bio, users[x].username, users[x].preferred_distance, users[x].longitude, users[x].latitude, users[x].user_interests, users[x].fame_rating, users[x].status);
-                                            y++;
+                                            if (users[x].gender == 'male' && users[x].prefence == "male")
+                                            {
+                                                valid_users[y] = new Users(users[x].profile_pic, users[x].gender, users[x].age, users[x].prefence, users[x].bio, users[x].username, users[x].preferred_distance, users[x].longitude, users[x].latitude, users[x].user_interests, users[x].fame_rating, users[x].status);
+                                                y++;
+                                            }
+                                            if (users[x].gender == "female" && users[x].prefence == "male")
+                                            {
+                                                valid_users[y] = new Users(users[x].profile_pic, users[x].gender, users[x].age, users[x].prefence, users[x].bio, users[x].username, users[x].preferred_distance, users[x].longitude, users[x].latitude, users[x].user_interests, users[x].fame_rating, users[x].status);
+                                                y++;
+                                            }
+                                        }
+                                        else if (myGender == "female")
+                                        {
+                                            if (users[x].gender == 'male' && users[x].prefence == "female")
+                                            {
+                                                valid_users[y] = new Users(users[x].profile_pic, users[x].gender, users[x].age, users[x].prefence, users[x].bio, users[x].username, users[x].preferred_distance, users[x].longitude, users[x].latitude, users[x].user_interests, users[x].fame_rating, users[x].status);
+                                                y++;
+                                            }
+                                            if (users[x].gender == "female" && users[x].prefence == "female")
+                                            {
+                                                valid_users[y] = new Users(users[x].profile_pic, users[x].gender, users[x].age, users[x].prefence, users[x].bio, users[x].username, users[x].preferred_distance, users[x].longitude, users[x].latitude, users[x].user_interests, users[x].fame_rating, users[x].status);
+                                                y++;
+                                            }
                                         }
                                     }
-                                    else if (myGender == "female")
-                                    {
-                                        if (users[x].gender == "male" && users[x].prefence == "women")
-                                        {
-                                            valid_users[y] = new Users(users[x].profile_pic, users[x].gender, users[x].age, users[x].prefence, users[x].bio, users[x].username, users[x].preferred_distance, users[x].longitude, users[x].latitude, users[x].user_interests, users[x].fame_rating, users[x].status);
-                                            y++;
-                                        }
-                                    }
-                                }
-                                else if (myPrefence == "bi-sexual")
-                                {
-                                    if (myGender == "male")
-                                    {
-                                        if (users[x].gender == 'male' && users[x].prefence == "male")
-                                        {
-                                            valid_users[y] = new Users(users[x].profile_pic, users[x].gender, users[x].age, users[x].prefence, users[x].bio, users[x].username, users[x].preferred_distance, users[x].longitude, users[x].latitude, users[x].user_interests, users[x].fame_rating, users[x].status);
-                                            y++;
-                                        }
-                                        if (users[x].gender == "female" && users[x].prefence == "male")
-                                        {
-                                            valid_users[y] = new Users(users[x].profile_pic, users[x].gender, users[x].age, users[x].prefence, users[x].bio, users[x].username, users[x].preferred_distance, users[x].longitude, users[x].latitude, users[x].user_interests, users[x].fame_rating, users[x].status);
-                                            y++;
-                                        }
-                                    }
-                                    else if (myGender == "female")
-                                    {
-                                        if (users[x].gender == 'male' && users[x].prefence == "female")
-                                        {
-                                            valid_users[y] = new Users(users[x].profile_pic, users[x].gender, users[x].age, users[x].prefence, users[x].bio, users[x].username, users[x].preferred_distance, users[x].longitude, users[x].latitude, users[x].user_interests, users[x].fame_rating, users[x].status);
-                                            y++;
-                                        }
-                                        if (users[x].gender == "female" && users[x].prefence == "female")
-                                        {
-                                            valid_users[y] = new Users(users[x].profile_pic, users[x].gender, users[x].age, users[x].prefence, users[x].bio, users[x].username, users[x].preferred_distance, users[x].longitude, users[x].latitude, users[x].user_interests, users[x].fame_rating, users[x].status);
-                                            y++;
-                                        }
-                                    }
+
                                 }
                                 x++;
                             }
@@ -258,7 +258,7 @@ router.get('/home', function(req, res) {
                             //further list down by filtering with tags/interests
                             var valid_users_prefence_distance_tags = [];
                             var my_interests = my_info[0].user_interests.split("#");
-                            var max_interests = 2;
+                            var max_interests = 1;
                             var c = 0;
                             var d = 0;
                             

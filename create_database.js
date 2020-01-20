@@ -12,7 +12,7 @@ db.query("CREATE TABLE IF NOT EXISTS images (username VARCHAR(255) NOT NULL, ima
     else if (succ)
         console.log("images table created");
 })
-db.query("CREATE TABLE IF NOT EXISTS likes (username VARCHAR(255) NOT NULL, likes VARCHAR(255) NOT NULL, like_back INT NOT NULL, room_id INT NOT NULL, statuse VARCHAR(50) NOT NULL);", (err, succ) => {
+db.query("CREATE TABLE IF NOT EXISTS likes (username VARCHAR(255) NOT NULL, likes VARCHAR(255) NOT NULL, like_back INT NOT NULL, room_id VARCHAR(50) NOT NULL, status VARCHAR(50) NOT NULL);", (err, succ) => {
     if (err)
         console.log(err);
     else if (succ)
@@ -30,7 +30,7 @@ db.query("CREATE TABLE IF NOT EXISTS users (username VARCHAR(255) NOT NULL, firs
     else if (succ)
         console.log("users table created");
 })
-db.query("CREATE TABLE IF NOT EXISTS user_profile (gender VARCHAR(50) NOT NULL, age INT NOT NULL, prefence VARCHAR(255) NOT NULL, bio VARCHAR(1000) NOT NULL, username VARCHAR(255) NOT NULL, preferred_distance INT NOT NULL, longitude FLOAT NOT NULL, latitude FLOAT NOT NULL, user_interests VARCHAR(1000) NOT NULL, profile_pic VARCHAR(1000) NOT NULL, fame_rating INT NOT NULL, status VARCHAR(255) NOT NULL DEFAULT 'offline', date_of_last_connection VARCHAR(50) NOT NULL);", (err, succ) => {
+db.query("CREATE TABLE IF NOT EXISTS user_profile (gender VARCHAR(50) NOT NULL, age INT NOT NULL, prefence VARCHAR(255) NOT NULL, bio VARCHAR(1000) NOT NULL, username VARCHAR(255) NOT NULL, preferred_distance INT NOT NULL, longitude FLOAT NOT NULL, latitude FLOAT NOT NULL, user_interests VARCHAR(1000) NOT NULL, profile_pic VARCHAR(1000) NOT NULL, fame_rating FLOAT NOT NULL, status VARCHAR(255) NOT NULL DEFAULT 'offline', date_of_last_connection VARCHAR(50) NOT NULL);", (err, succ) => {
     if (err)
         console.log(err);
     else if (succ)

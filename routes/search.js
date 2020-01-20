@@ -74,7 +74,7 @@ router.post('/search', (req, res) => {
                             let z = 0;
                             while (succ[z])
                             {
-                                if ((succ[z].likes == users[y].username) && succ[z].status == "blocker")
+                                if ((succ[z].likes == users[y].username) && succ[z].status == "blocked")
                                 {
                                     users[y] = "Dont";
                                 }

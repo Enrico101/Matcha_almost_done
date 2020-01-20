@@ -38,7 +38,7 @@ router.post('/like', (req, res) => {
                 else
                 {
                     var room_id = Math.floor((Math.random() * 10000) + 1);
-                    db.query("INSERT INTO likes (username, likes, like_back, room_id) VALUES (?, ?, ?, ?)", [username, likes, 0, "not_staged"], (err, succ01) => {
+                    db.query("INSERT INTO likes (username, likes, like_back, room_id, status) VALUES (?, ?, ?, ?, ?)", [username, likes, 0, "not_staged", "not_staged"], (err, succ01) => {
                         if (err)
                         {
                             res.send(err);
@@ -51,7 +51,10 @@ router.post('/like', (req, res) => {
                                 else if (info)
                                 {
                                     let fame = info[0].fame_rating;
-                                    fame++;
+                                    if (fame < 10)
+                                    {
+                                        fame += 0.25;
+                                    }
                                     console.log("fame: "+fame);
                                     db.query("UPDATE user_profile SET fame_rating = ? WHERE username = ?", [fame, info[0].username], (err, succ) => {
                                         if (err)

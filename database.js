@@ -4,9 +4,9 @@ var mysql = require('mysql');
 var db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '',
-    //password: 'Radnic444',
-    //socketPath: '/goinfre/enradcli/Desktop/MAMP/mysql/tmp/mysql.sock',
+    //password: '',
+    password: 'Radnic444',
+    socketPath: '/goinfre/enradcli/Desktop/MAMP/mysql/tmp/mysql.sock',
     database: 'matcha'
     });
     db.connect();

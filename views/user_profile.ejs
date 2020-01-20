@@ -9,7 +9,20 @@
 </head>
 <body>
     <form action="/like" method="post" onsubmit="like_notification()">
-        <img src=<%=user_info.profile_pic%> width="400px" height="370px" style="border-radius: 50%;"></p>
+        <%
+            if (user_info.profile_pic != "Not_staged")
+            {
+        %>
+                <img src=<%=user_info.profile_pic%> width="400px" height="370px" style="border-radius: 50%;"></p>
+        <%
+            }
+            else
+            {
+        %>
+                <img src="../Uploads/stock_profile_pic.png" width="400px" height="370px" style="border-radius: 50%;"></p>
+        <%
+            }
+        %>
         <p>Username: <%=user_info.username%></p>
         <p>Age: <%=user_info.age%></p>
         <p>Bio: <%=user_info.bio%></p>
@@ -63,6 +76,8 @@
     <form action="report_user" method="post">
         <input type="submit" name="submit" value="Report user as fake">
         <input type="hidden" name="username" value=<%=user_info.username%>>
+        <br />
+        <input type="hidden" name="email" value=<%=user_email[0].email%>>
     </form>
     <script>
         function like_notification()
