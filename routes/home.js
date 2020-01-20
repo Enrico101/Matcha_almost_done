@@ -116,7 +116,7 @@ router.get('/home', function(req, res) {
                                     {
                                         if (users[q].gender == "male" && users[q].prefence == "women")
                                         {
-                                            if (user[q].fame_rating > maximum_fame_rating)
+                                            if (users[q].fame_rating > maximum_fame_rating)
                                                 maximum_fame_rating = users[q].fame_rating;
                                         }
                                         q++;

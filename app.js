@@ -39,6 +39,7 @@ var block = require('./routes/block');
 var admin = require('./routes/admin');
 var blocked_requests = require('./routes/block_requests');
 var like_history = require('./routes/like_history');
+var profile_settings = require('./routes/profile_settings');
 var example = require('./routes/example');
 var path = require('path');
 
@@ -103,6 +104,7 @@ app.use(block);
 app.use(admin);
 app.use(blocked_requests);
 app.use(like_history);
+app.use('/profile_settings', profile_settings);
 
 //we listen for client requests
 var server = app.listen(port, function() {
