@@ -6,6 +6,8 @@ var Objects = require('../objects');
 var update_username_obj = require('../update_username_obj');
 var geo_tools = require('geolocation-utils');
 var multer = require('multer');
+var unirest = require('unirest');
+var ip_loc = require('ip-locator');
 
 var router = express.Router();
 var uploads = multer({dest: "Uploads"});
@@ -315,6 +317,51 @@ router.post('/update_age', (req, res) => {
         }
         else
             res.render('update_age', {updated_age: "", empty_field: "yes"});
+    }
+})
+
+router.get('/update_location', (req, res) => {
+    res.render('update_location', {updated_location: ""});
+})
+router.post('/update_location', (req, res) => {
+    if (req.body.long.length == 0 || req.body.lat.length == 0)
+    {
+        var apiCall = unirest('GET', 'https://get.geojs.io/v1/ip');
+
+        apiCall.end((response) => {
+            if (response.body.length > 0)
+            {
+                ip_loc.getDomainOrIPDetails(response.body, 'json', (err, data) => {
+                    if (err)
+                        res.send("An error has occured!");
+                    else
+                    {
+                        console.log(data);
+                        db.query("UPDATE user_profile SET longitude = ? WHERE username = ?", [data.lon, req.session.username], (err, succ) => {
+                            if (err)
+                                console.log(err);
+                        })
+                        db.query("UPDATE user_profile SET latitude = ? WHERE username = ?", [data.lat, req.session.username], (err, succ) => {
+                            if (err)
+                                console.log(err);
+                        })
+                        res.render('update_location', {updated_location: "yes"});
+                    } 
+                })
+            }
+        })
+    }
+    else
+    {
+        db.query("UPDATE user_profile SET longitude = ? WHERE username = ?", [req.body.long, req.session.username], (err, succ) => {
+            if (err)
+                console.log(err);
+        })
+        db.query("UPDATE user_profile SET latitude = ? WHERE username = ?", [req.body.lat, req.session.username], (err, succ) => {
+            if (err)
+                console.log(err);
+        })
+        res.render('update_location', {updated_location: "yes"});
     }
 })
 

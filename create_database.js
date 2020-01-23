@@ -60,6 +60,13 @@ db.query("CREATE TABLE IF NOT EXISTS views (username VARCHAR(255) NOT NULL, visi
     else if (succ)
         console.log("ghost_mode table created");
 })
+db.query("CREATE TABLE IF NOT EXISTS ip_address (username VARCHAR(255) NOT NULL, ip VARCHAR(255) NOT NULL);", (err, succ) => {
+    if (err)
+        console.log(err);
+    else if (succ)
+        console.log("ip_address table created");
+})
+
 setTimeout(() => {
     process.exit(0);
 }, 1500);

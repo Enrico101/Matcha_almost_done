@@ -90,6 +90,9 @@ router.post('/auth', function(req, res) {
                             auth: {
                                 user: "enradcli@student.wethinkcode.co.za",
                                 pass: "Paul444@"
+                            },
+                            tls: {
+                                rejectUnauthorized: false
                             }
                         })
                         var token = unique_id();
