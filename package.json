@@ -26,7 +26,7 @@
     "ngrok": "^3.2.7",
     "nodemailer": "^6.4.2",
     "request-ip": "^2.1.3",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.5.0",
     "uniqid": "^5.2.0",
     "unirest": "^0.6.0",
     "user-ip": "^1.0.1"
